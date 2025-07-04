@@ -303,7 +303,7 @@
 
     <!-- GANTI 'link_musik_kamu.mp3' DENGAN LINK MUSIK MP3 ANDA -->
     <audio id="background-music" loop>
-        <source src="https://drive.google.com/file/d/1gjg_YW8VZ7_RKg7KgknVigUnnySVOI6o/view?usp=drivesdk" type="audio/mpeg">
+        <source src="ID3" type="audio/mpeg">
         Browser Anda tidak mendukung elemen audio.
     </audio>
 
@@ -394,6 +394,7 @@
             // Fungsi untuk memulai musik
             function playMusic() {
                 // Interaksi pengguna diperlukan agar audio bisa diputar otomatis
+                music.muted = false; // buka mute-nya
                 music.play().catch(error => {
                     console.log("Pemutaran otomatis diblokir oleh browser. Interaksi pengguna diperlukan.");
                 });
