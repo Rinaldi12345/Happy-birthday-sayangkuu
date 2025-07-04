@@ -1,430 +1,442 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Selamat Ulang Tahun, Sayang!</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selamat Ulang Tahun, Sayang!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* --- Pengaturan Dasar --- */
+        :root {
+            --bg-color: #fde2e4;
+            --text-color: #2a2a2a;
+            --primary-color: #e78f8f;
+            --secondary-color: #f4acb7;
+            --heart-color: #ff4d6d;
+        }
 
-  <!-- 🌸 Tambahan library sakura -->
-  <script src="https://cdn.jsdelivr.net/npm/sakura-js@1.0.4/dist/sakura.min.js"></script>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  <style>
-    :root {
-      --bg-color: #fde2e4;
-      --text-color: #2a2a2a;
-      --primary-color: #e78f8f;
-      --secondary-color: #f4acb7;
-      --heart-color: #ff4d6d;
-    }
+        body, html {
+            width: 100%;
+            height: 100%;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--bg-color), #fff1f2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+        /* --- Layar Pembuka (Bunga) --- */
+        #intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: var(--bg-color);
+            z-index: 100;
+            transition: opacity 1.5s ease-in-out;
+            cursor: pointer;
+        }
 
-    body, html {
-      width: 100%;
-      height: 100%;
-      font-family: 'Poppins', sans-serif;
-      overflow: hidden;
-      background: linear-gradient(135deg, var(--bg-color), #fff1f2);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+        #intro-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
 
-    .sakura {
-      pointer-events: none;
-    }
+        .flower-container {
+            position: relative;
+            width: 250px;
+            height: 250px;
+            animation: sway 5s ease-in-out infinite;
+        }
+        
+        @keyframes sway {
+            0%, 100% { transform: rotate(5deg); }
+            50% { transform: rotate(-5deg); }
+        }
 
-    #intro-screen {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      display: flex; flex-direction: column;
-      justify-content: center; align-items: center;
-      background: var(--bg-color);
-      z-index: 100;
-      transition: opacity 1.5s ease-in-out;
-      cursor: pointer;
-    }
+        .flower {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
 
-    #intro-screen.hidden {
-      opacity: 0;
-      pointer-events: none;
-    }
+        .petal {
+            position: absolute;
+            width: 100px;
+            height: 150px;
+            background: linear-gradient(to bottom, #ffc2d1, #ff8fab);
+            border-radius: 50px 50px 0 0;
+            left: 75px;
+            top: 0;
+            transform-origin: bottom center;
+            transition: transform 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+        
+        .petal1 { transform: rotate(0deg) scale(0.8); }
+        .petal2 { transform: rotate(60deg) scale(0.8); }
+        .petal3 { transform: rotate(120deg) scale(0.8); }
+        .petal4 { transform: rotate(180deg) scale(0.8); }
+        .petal5 { transform: rotate(240deg) scale(0.8); }
+        .petal6 { transform: rotate(300deg) scale(0.8); }
 
-    .flower-container {
-      position: relative;
-      width: 250px;
-      height: 250px;
-      animation: sway 5s ease-in-out infinite;
-    }
+        .flower-center {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: #ffe54c;
+            border-radius: 50%;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+        }
 
-    @keyframes sway {
-      0%, 100% { transform: rotate(5deg); }
-      50% { transform: rotate(-5deg); }
-    }
+        /* Animasi Mekar */
+        .flower.bloomed .petal { transform: scale(1); }
+        .flower.bloomed .petal1 { transform: rotate(25deg) translateY(-50px) scale(1); }
+        .flower.bloomed .petal2 { transform: rotate(85deg) translateY(-50px) scale(1); }
+        .flower.bloomed .petal3 { transform: rotate(145deg) translateY(-50px) scale(1); }
+        .flower.bloomed .petal4 { transform: rotate(205deg) translateY(-50px) scale(1); }
+        .flower.bloomed .petal5 { transform: rotate(265deg) translateY(-50px) scale(1); }
+        .flower.bloomed .petal6 { transform: rotate(325deg) translateY(-50px) scale(1); }
 
-    .flower {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-    }
+        .intro-text {
+            margin-top: 40px;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            animation: fadeIn 2s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; } to { opacity: 1; }
+        }
 
-    .petal {
-      position: absolute;
-      width: 100px;
-      height: 150px;
-      background: linear-gradient(to bottom, #ffc2d1, #ff8fab);
-      border-radius: 50px 50px 0 0;
-      left: 75px;
-      top: 0;
-      transform-origin: bottom center;
-      transition: transform 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-    }
+        /* --- Konten Utama (Slides) --- */
+        #main-content {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
 
-    .petal1 { transform: rotate(0deg) scale(0.8); }
-    .petal2 { transform: rotate(60deg) scale(0.8); }
-    .petal3 { transform: rotate(120deg) scale(0.8); }
-    .petal4 { transform: rotate(180deg) scale(0.8); }
-    .petal5 { transform: rotate(240deg) scale(0.8); }
-    .petal6 { transform: rotate(300deg) scale(0.8); }
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1.2s ease-in-out, transform 1.2s ease-in-out;
+            transform: scale(0.95);
+        }
 
-    .flower-center {
-      position: absolute;
-      width: 80px;
-      height: 80px;
-      background: #ffe54c;
-      border-radius: 50%;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 10;
-    }
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+            z-index: 10;
+        }
 
-    .flower.bloomed .petal { transform: scale(1); }
-    .flower.bloomed .petal1 { transform: rotate(25deg) translateY(-50px) scale(1); }
-    .flower.bloomed .petal2 { transform: rotate(85deg) translateY(-50px) scale(1); }
-    .flower.bloomed .petal3 { transform: rotate(145deg) translateY(-50px) scale(1); }
-    .flower.bloomed .petal4 { transform: rotate(205deg) translateY(-50px) scale(1); }
-    .flower.bloomed .petal5 { transform: rotate(265deg) translateY(-50px) scale(1); }
-    .flower.bloomed .petal6 { transform: rotate(325deg) translateY(-50px) scale(1); }
+        .slide-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            max-width: 90%;
+            width: 600px;
+        }
+        
+        /* Layout berbeda untuk slide */
+        #slide2 .slide-content { flex-direction: row-reverse; text-align: right; }
+        #slide1 .slide-content { flex-direction: row; text-align: left; }
+        
+        @media (max-width: 768px) {
+            #slide1 .slide-content, #slide2 .slide-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
 
-    .intro-text {
-      margin-top: 40px;
-      font-size: 1.2rem;
-      color: var(--primary-color);
-      font-weight: 600;
-      animation: fadeIn 2s ease-in-out;
-    }
+        .slide img {
+            width: 200px;
+            height: 200px;
+            border-radius: 15px;
+            object-fit: cover;
+            margin: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            border: 5px solid white;
+        }
 
-    @keyframes fadeIn {
-      from { opacity: 0; } to { opacity: 1; }
-    }
+        .slide .text-container {
+            max-width: 300px;
+        }
 
-    #main-content {
-      width: 100%;
-      height: 100%;
-      position: relative;
-    }
+        .slide h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-weight: normal;
+        }
 
-    .slide {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 1.2s ease-in-out, transform 1.2s ease-in-out;
-      transform: scale(0.95);
-    }
+        .slide p {
+            color: var(--text-color);
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
 
-    .slide.active {
-      opacity: 1;
-      visibility: visible;
-      transform: scale(1);
-      z-index: 10;
-    }
+        .next-button {
+            display: inline-block;
+            padding: 12px 25px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(231, 143, 143, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
 
-    .slide-content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      background: rgba(255, 255, 255, 0.7);
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-      backdrop-filter: blur(10px);
-      max-width: 90%;
-      width: 600px;
-    }
+        .next-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(244, 172, 183, 0.7);
+        }
 
-    #slide2 .slide-content { flex-direction: row-reverse; text-align: right; }
-    #slide1 .slide-content { flex-direction: row; text-align: left; }
+        /* Animasi Hati untuk Tombol Lanjut */
+        #slide3 .next-button {
+            position: relative;
+            background: none;
+            border: none;
+            padding: 0;
+            width: 80px;
+            height: 80px;
+            box-shadow: none;
+        }
+        #slide3 .next-button:hover {
+             transform: scale(1.1);
+             box-shadow: none;
+        }
 
-    @media (max-width: 768px) {
-      #slide1 .slide-content, #slide2 .slide-content {
-        flex-direction: column;
-        text-align: center;
-      }
-    }
+        .heart-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            animation: beat 1.3s infinite;
+        }
 
-    .slide img {
-      width: 200px;
-      height: 200px;
-      border-radius: 15px;
-      object-fit: cover;
-      margin: 20px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.15);
-      border: 5px solid white;
-    }
+        .heart-animation::before,
+        .heart-animation::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 40px;
+            height: 65px;
+            border-radius: 50px 50px 0 0;
+            background: var(--heart-color);
+        }
 
-    .slide .text-container {
-      max-width: 300px;
-    }
+        .heart-animation::before {
+            left: 40px;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
 
-    .slide h1 {
-      font-family: 'Great Vibes', cursive;
-      font-size: 3rem;
-      color: var(--primary-color);
-      margin-bottom: 15px;
-      font-weight: normal;
-    }
+        .heart-animation::after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
 
-    .slide p {
-      color: var(--text-color);
-      font-size: 1rem;
-      line-height: 1.6;
-      margin-bottom: 25px;
-    }
+        @keyframes beat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
 
-    .next-button {
-      display: inline-block;
-      padding: 12px 25px;
-      background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-      color: white;
-      border-radius: 50px;
-      font-weight: 600;
-      box-shadow: 0 4px 15px rgba(231, 143, 143, 0.5);
-      border: none;
-      font-size: 1rem;
-      cursor: pointer;
-    }
+        /* Slide Terakhir */
+        #slide4 .slide-content {
+            background: none;
+            backdrop-filter: none;
+            box-shadow: none;
+        }
 
-    .next-button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 7px 20px rgba(244, 172, 183, 0.7);
-    }
+        #slide4 h1 {
+            font-size: 4rem;
+        }
 
-    #slide3 .next-button {
-      position: relative;
-      background: none;
-      border: none;
-      padding: 0;
-      width: 80px;
-      height: 80px;
-      box-shadow: none;
-    }
-
-    #slide3 .next-button:hover {
-      transform: scale(1.1);
-    }
-
-    .heart-animation {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      animation: beat 1.3s infinite;
-    }
-
-    .heart-animation::before,
-    .heart-animation::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      width: 40px;
-      height: 65px;
-      border-radius: 50px 50px 0 0;
-      background: var(--heart-color);
-    }
-
-    .heart-animation::before {
-      left: 40px;
-      transform: rotate(-45deg);
-      transform-origin: 0 100%;
-    }
-
-    .heart-animation::after {
-      left: 0;
-      transform: rotate(45deg);
-      transform-origin: 100% 100%;
-    }
-
-    @keyframes beat {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(1); }
-    }
-
-    #slide4 .slide-content {
-      background: none;
-      backdrop-filter: none;
-      box-shadow: none;
-    }
-
-    #slide4 h1 { font-size: 4rem; }
-    #slide4 p  { font-size: 1.2rem; }
-  </style>
+        #slide4 p {
+            font-size: 1.2rem;
+        }
+    </style>
 </head>
-
 <body>
-  <audio id="background-music" loop autoplay muted>
-    <source src="ulang-tahun.mp3" type="audio/mpeg" />
-  </audio>
 
-  <div id="intro-screen">
-    <div class="flower-container">
-      <div class="flower" id="flower">
-        <div class="petal petal1"></div>
-        <div class="petal petal2"></div>
-        <div class="petal petal3"></div>
-        <div class="petal petal4"></div>
-        <div class="petal petal5"></div>
-        <div class="petal petal6"></div>
-        <div class="flower-center"></div>
-      </div>
-    </div>
-    <p class="intro-text">Sentuh bunga ini ya sayang...</p>
-  </div>
+    <!-- GANTI 'link_musik_kamu.mp3' DENGAN LINK MUSIK MP3 ANDA -->
+    <audio id="background-music" loop autoplay muted>
+        <source src="ulang-tahun.mp3" type="audio/mpeg">
+        Browser Anda tidak mendukung elemen audio.
+    </audio>
 
-  <div id="main-content" style="visibility: hidden;">
-    <div class="slide active" id="slide1">
-      <div class="slide-content">
-        <img src="foto1.jpeg" alt="Foto pasangan 1">
-        <div class="text-container">
-          <h1>Selamat Ulang Tahun!</h1>
-          <p>Untuk orang paling spesial di hidupku. Hari ini adalah hari bahagiamu, dan aku ingin memulainya dengan kenangan indah kita.</p>
-          <button class="next-button" data-next="2">Lihat selanjutnya...</button>
+    <!-- 1. Layar Pembuka -->
+    <div id="intro-screen">
+        <div class="flower-container">
+            <div class="flower" id="flower">
+                <div class="petal petal1"></div>
+                <div class="petal petal2"></div>
+                <div class="petal petal3"></div>
+                <div class="petal petal4"></div>
+                <div class="petal petal5"></div>
+                <div class="petal petal6"></div>
+                <div class="flower-center"></div>
+            </div>
         </div>
-      </div>
+        <p class="intro-text">Sentuh bunga ini ya sayang...</p>
     </div>
 
-    <div class="slide" id="slide2">
-      <div class="slide-content">
-        <img src="foto2.jpeg" alt="Foto pasangan 2">
-        <div class="text-container">
-          <h1>Setiap Momen...</h1>
-          <p>...bersamamu adalah anugerah. Terima kasih sudah membawa begitu banyak tawa dan warna dalam hidupku. Aku sangat bersyukur memilikimu.</p>
-          <button class="next-button" data-next="3">Ada lagi lho...</button>
+    <!-- 2. Konten Utama (Berisi semua slide) -->
+    <div id="main-content" style="visibility: hidden;">
+
+        <!-- SLIDE 1 -->
+        <div class="slide active" id="slide1">
+            <div class="slide-content">
+                <!-- GANTI FOTO DI SINI -->
+                <img src="foto1.jpeg" alt="Foto pasangan 1">
+                <div class="text-container">
+                    <!-- GANTI TULISAN DI SINI -->
+                    <h1>Selamat Ulang Tahun!</h1>
+                    <p>Untuk orang paling spesial di hidupku. Hari ini adalah hari bahagiamu, dan aku ingin memulainya dengan kenangan indah kita.</p>
+                    <button class="next-button" data-next="2">Lihat selanjutnya...</button>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
 
-    <div class="slide" id="slide3">
-      <div class="slide-content">
-        <img src="foto3.jpeg" alt="Foto pasangan 3">
-        <div class="text-container">
-          <h1>Harapanku Untukmu</h1>
-          <p>Semoga di usiamu yang baru, kamu selalu diberi kesehatan, kebahagiaan yang tak terhingga, dan semua impianmu tercapai. Aku akan selalu di sini mendukungmu.</p>
-          <button class="next-button" data-next="4">
-            <div class="heart-animation"></div>
-          </button>
+        <!-- SLIDE 2 -->
+        <div class="slide" id="slide2">
+            <div class="slide-content">
+                 <!-- GANTI FOTO DI SINI -->
+                <img src="foto2.jpeg" alt="Foto pasangan 2">
+                <div class="text-container">
+                     <!-- GANTI TULISAN DI SINI -->
+                    <h1>Setiap Momen...</h1>
+                    <p>...bersamamu adalah anugerah. Terima kasih sudah membawa begitu banyak tawa dan warna dalam hidupku. Aku sangat bersyukur memilikimu.</p>
+                    <button class="next-button" data-next="3">Ada lagi lho...</button>
+                </div>
+            </div>
         </div>
-      </div>
+
+        <!-- SLIDE 3 -->
+        <div class="slide" id="slide3">
+            <div class="slide-content">
+                 <!-- GANTI FOTO DI SINI -->
+                <img src="foto3.jpeg" alt="Foto pasangan 3">
+                <div class="text-container">
+                     <!-- GANTI TULISAN DI SINI -->
+                    <h1>Harapanku Untukmu</h1>
+                    <p>Semoga di usiamu yang baru, kamu selalu diberi kesehatan, kebahagiaan yang tak terhingga, dan semua impianmu tercapai. Aku akan selalu di sini mendukungmu.</p>
+                    <button class="next-button" data-next="4">
+                        <div class="heart-animation"></div>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SLIDE 4 - SLIDE TERAKHIR -->
+        <div class="slide" id="slide4">
+            <div class="slide-content">
+                 <!-- GANTI TULISAN DI SINI -->
+                <h1>I Love You</h1>
+                <p>Lebih dari kata-kata yang bisa kuungkapkan. Dulu, sekarang, dan selamanya. Selamat ulang tahun sekali lagi, cintaku.</p>
+                <!-- Tidak ada tombol lanjut di sini -->
+            </div>
+        </div>
+
     </div>
 
-    <div class="slide" id="slide4">
-      <div class="slide-content">
-        <h1>I Love You</h1>
-        <p>Lebih dari kata-kata yang bisa kuungkapkan. Dulu, sekarang, dan selamanya. Selamat ulang tahun sekali lagi, cintaku.</p>
-      </div>
-    </div>
-  </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Ambil semua elemen yang dibutuhkan
+            const introScreen = document.getElementById('intro-screen');
+            const flower = document.getElementById('flower');
+            const mainContent = document.getElementById('main-content');
+            const music = document.getElementById('background-music');
+            const nextButtons = document.querySelectorAll('.next-button');
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const introScreen = document.getElementById('intro-screen');
-      const flower = document.getElementById('flower');
-      const mainContent = document.getElementById('main-content');
-      const music = document.getElementById('background-music');
-      const nextButtons = document.querySelectorAll('.next-button');
+            // Fungsi untuk memulai musik
+            function playMusic() {
+                // Interaksi pengguna diperlukan agar audio bisa diputar otomatis
+                music.muted = false; // buka mute-nya
+                music.play().catch(error => {
+                    console.log("Pemutaran otomatis diblokir oleh browser. Interaksi pengguna diperlukan.");
+                });
+            }
+            
+            // Event listener saat bunga di layar pembuka diklik
+            introScreen.addEventListener('click', () => {
+                // Putar musik
+                playMusic();
 
-      function playMusic() {
-        music.muted = false;
-        music.play().catch(() => {});
-      }
+                // Tambahkan class 'bloomed' untuk memicu animasi mekar
+                flower.classList.add('bloomed');
+                
+                // Sembunyikan tulisan "Sentuh bunga ini"
+                introScreen.querySelector('.intro-text').style.opacity = '0';
 
-      introScreen.addEventListener('click', () => {
-        playMusic();
-        flower.classList.add('bloomed');
-        introScreen.querySelector('.intro-text').style.opacity = '0';
+                // Tunggu animasi mekar selesai, lalu tampilkan konten utama
+                setTimeout(() => {
+                    introScreen.classList.add('hidden');
+                    mainContent.style.visibility = 'visible';
+                    // Hapus layar intro dari DOM setelah transisi selesai agar tidak mengganggu
+                     setTimeout(() => {
+                        introScreen.style.display = 'none';
+                    }, 1500);
+                }, 1500); // Durasi ini harus cocok dengan transisi CSS
+            });
 
-        setTimeout(() => {
-          introScreen.classList.add('hidden');
-          mainContent.style.visibility = 'visible';
-          setTimeout(() => {
-            introScreen.style.display = 'none';
-          }, 1500);
-        }, 1500);
-      });
+            // Event listener untuk semua tombol "selanjutnya"
+            nextButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const currentSlide = button.closest('.slide');
+                    const nextSlideId = 'slide' + button.getAttribute('data-next');
+                    const nextSlide = document.getElementById(nextSlideId);
 
-      // 🌸 Tambahkan animasi sakura per slide
-      const sakuraSlide1 = new Sakura('#slide1', {
-        colors: [{ gradientColorStart: 'rgba(255,192,203,0.9)', gradientColorEnd: 'rgba(255,105,180,0.8)', gradientColorDegree: 120 }],
-        fallSpeed: 1.3, maxSize: 12, minSize: 8, delay: 300
-      });
-
-      const sakuraSlide2 = new Sakura('#slide2', {
-        colors: [{ gradientColorStart: 'rgba(200,255,200,0.9)', gradientColorEnd: 'rgba(120,255,160,0.8)', gradientColorDegree: 120 }],
-        fallSpeed: 1.6, maxSize: 14, minSize: 9, delay: 350
-      });
-
-      const sakuraSlide3 = new Sakura('#slide3', {
-        colors: [{ gradientColorStart: 'rgba(190,200,255,0.9)', gradientColorEnd: 'rgba(120,140,255,0.8)', gradientColorDegree: 120 }],
-        fallSpeed: 1.1, maxSize: 13, minSize: 7, delay: 400
-      });
-
-      function updateSakura() {
-        const map = [
-          { id: 'slide1', sakura: sakuraSlide1 },
-          { id: 'slide2', sakura: sakuraSlide2 },
-          { id: 'slide3', sakura: sakuraSlide3 }
-        ];
-        map.forEach(pair => {
-          const el = document.getElementById(pair.id);
-          if (el.classList.contains('active')) pair.sakura.start();
-          else pair.sakura.stop();
+                    if (currentSlide && nextSlide) {
+                        currentSlide.classList.remove('active');
+                        nextSlide.classList.add('active');
+                    }
+                });
+            });
         });
-      }
+    </script>
 
-      updateSakura();
-
-      nextButtons.forEach(button => {
-        button.addEventListener('click', () => {
-          const currentSlide = button.closest('.slide');
-          const nextSlideId = 'slide' + button.getAttribute('data-next');
-          const nextSlide = document.getElementById(nextSlideId);
-
-          if (currentSlide && nextSlide) {
-            currentSlide.classList.remove('active');
-            nextSlide.classList.add('active');
-          }
-
-          setTimeout(updateSakura, 400);
-        });
-      });
-    });
-  </script>
 </body>
 </html>
