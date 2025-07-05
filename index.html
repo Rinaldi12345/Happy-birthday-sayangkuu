@@ -366,6 +366,9 @@
                 spin calc(var(--dur)*.7) linear var(--delay) infinite;
             will-change: transform;
         }
+
+        /* --- SEMBUNYIKAN main-content SEBELUM INTRO SELESAI --- */
+        #main-content.hidden { visibility: hidden; }
     </style>
 </head>
     <body>
@@ -393,7 +396,7 @@
     </div>
 
     <!-- 2. Konten Utama (Berisi semua slide) -->
-    <div id="main-content" style="visibility: hidden;">
+    <div id="main-content" class="hidden">
 
         <!-- SLIDE 1 -->
         <div class="slide active" id="slide1">
@@ -483,7 +486,7 @@
                 // Tunggu animasi mekar selesai, lalu tampilkan konten utama
                 setTimeout(() => {
                     introScreen.classList.add('hidden');
-                    mainContent.style.visibility = 'visible';
+                    mainContent.classList.remove('hidden');
                     // Hapus layar intro dari DOM setelah transisi selesai agar tidak mengganggu
                      setTimeout(() => {
                         introScreen.style.display = 'none';
