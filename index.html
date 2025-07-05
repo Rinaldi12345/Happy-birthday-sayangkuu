@@ -297,6 +297,43 @@
         #slide4 p {
             font-size: 1.2rem;
         }
+        
+        <!-- ===== CSS TAMBAHAN : HUJAN BUNGA ===== -->
+        /* wadah transparan di tiap slide */
+        .flower-rain-container{
+            position:absolute;
+            inset:0;
+            overflow:hidden;
+            pointer-events:none;
+            z-index:4;              /* tepat di bawah .slide-content (z-index:10) */
+        }
+        
+        /* kelopak individual */
+        .falling-flower{
+            position:absolute;
+            top:-10vh;              /* mulai sedikit di atas layar */
+            opacity:.85;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,.15));
+            animation-name: fallDown, swaySide, spin;
+            animation-timing-function: linear, ease-in-out, linear;
+            animation-iteration-count: infinite;
+        }
+
+        /* Jatuh ke bawah */
+        @keyframes fallDown{
+            to{ top:110vh; }
+        }
+        
+        /* Goyang kiri-kanan */
+        @keyframes swaySide{
+            0%,100%{ transform:translateX(0); }
+            50%    { transform:translateX(var(--sway,25px)); }
+        }
+        
+        /* Berputar ringan */
+        @keyframes spin{
+            to{ transform:rotate(360deg); }
+        }
     </style>
 </head>
 <body>
@@ -434,6 +471,51 @@
                         nextSlide.classList.add('active');
                     }
                 });
+            });
+        });
+    </script>
+    <!-- ===== JS TAMBAHAN : GENERATOR HUJAN BUNGA ===== -->
+    <script>
+        window.addEventListener('DOMContentLoaded',()=>{
+
+            /* Pengaturan tiap slide: emoji & jumlah */
+            const settings={
+                slide1:{emoji:'🌸',count:30},
+                slide2:{emoji:'🌼',count:28},
+                slide3:{emoji:'🌺',count:26},
+                slide4:{emoji:'💮',count:24}
+            };
+
+            Object.entries(settings).forEach(([id,opt])=>{
+                const slide=document.getElementById(id);
+                if(!slide) return;
+
+                /* buat wadah bunga transparan */
+                const rain=document.createElement('div');
+                rain.className='flower-rain-container';
+                slide.appendChild(rain);
+
+                /* generate kelopak */
+                for(let i=0;i<opt.count;i++){
+                    const span=document.createElement('span');
+                    span.className='falling-flower';
+                    span.textContent=opt.emoji;
+
+                    /* acak properti kelopak agar natural */
+                    const size   = Math.random()*20 + 20;           // 20-40 px
+                    const left   = Math.random()*100;               // %
+                    const delay  = Math.random()*5;                 // 0-5 s
+                    const dur    = Math.random()*8 + 6;             // 6-14 s
+                    const sway   = (Math.random()>0.5?1:-1)*(Math.random()*30+10)+'px';
+
+                    span.style.fontSize      = size+'px';
+                    span.style.left          = left+'%';
+                    span.style.animationDelay= `${delay}s,${delay}s,${delay}s`;
+                    span.style.animationDuration=`${dur}s,${dur*0.7}s,${dur*0.7}s`;
+                    span.style.setProperty('--sway',sway);
+
+                    rain.appendChild(span);
+                }
             });
         });
     </script>
