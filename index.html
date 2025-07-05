@@ -335,42 +335,8 @@
             to{ transform:rotate(360deg); }
         }
     </style>
-
-    <style>
-        /* slide non-aktif: bekukan animasi */
-        .slide:not(.active) .falling-flower{
-            animation-play-state: paused;
-        }
-        
-        /* percepat komposit */
-        .flower-rain-container{
-            contain: layout paint style;
-            will-change: transform;
-        }
-
-        /* ubah gerakan jadi translateY (GPU friendly) */
-        @keyframes fallDown{
-            to{ transform:translate3d(0,110vh,0); }
-        }
-        @keyframes swaySide{
-            0%,100%{ transform:translateX(0); }
-            50%{ transform:translateX(var(--sway)); }
-        }
-        
-        /* spin tetap memakai rotate tapi digabung */
-        @keyframes spin{
-            to{ rotate:1turn; }
-        }
-        .falling-flower{
-            /* satu animasi gabungan, tidak tiga terpisah */
-            animation: fallDown var(--dur) linear var(--delay) infinite,
-                swaySide calc(var(--dur)*.7) ease-in-out var(--delay) infinite alternate,
-                spin calc(var(--dur)*.7) linear var(--delay) infinite;
-            will-change: transform;
-        }
-    </style>
 </head>
-    <body>
+<body>
 
     <!-- GANTI 'link_musik_kamu.mp3' DENGAN LINK MUSIK MP3 ANDA -->
     <audio id="background-music" loop autoplay muted>
@@ -514,10 +480,10 @@
 
             /* Pengaturan tiap slide: emoji & jumlah */
             const settings={
-                slide1:{emoji:'🌸',count:21},
-                slide2:{emoji:'🌼',count:21},
-                slide3:{emoji:'🌺',count:21},
-                slide4:{emoji:'💮',count:21}
+                slide1:{emoji:'🌸',count:30},
+                slide2:{emoji:'🌼',count:28},
+                slide3:{emoji:'🌺',count:26},
+                slide4:{emoji:'💮',count:24}
             };
 
             Object.entries(settings).forEach(([id,opt])=>{
