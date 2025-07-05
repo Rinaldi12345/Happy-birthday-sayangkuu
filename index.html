@@ -300,46 +300,43 @@
         
         <!-- ===== CSS TAMBAHAN : HUJAN BUNGA ===== -->
         /* wadah transparan di tiap slide */
-        /* ----------------- SEMBUNYIKAN MAIN (sebelum intro selesai) ----------------- */
-        #main-content.hidden { visibility: hidden; }
-
-        /* ----------------- CONTAINER HUJAN BUNGA ------------------------------------ */
         .flower-rain-container{
-            position: fixed;          /* menempel di seluruh viewport */
-            inset: 0;                 /* top:0; right:0; bottom:0; left:0 */
-            pointer-events: none;     /* jangan ganggu klik */
-            overflow: hidden;
-            z-index: 0;               /* di belakang konten; ubah jika perlu */
+            position:absolute;
+            inset:0;
+            overflow:hidden;
+            pointer-events:none;
+            z-index:4;              /* tepat di bawah .slide-content (z-index:10) */
         }
-
-        /* ----------------- TIAP KELOPAK -------------------------------------------- */
+        
+        /* kelopak individual */
         .falling-flower{
-            position: absolute;
-            top: -50px;               /* mulai di atas layar */
-            color: #ff69b4;           /* warna pink */
-            font-size: 20px;
-            will-change: transform;
-            animation-name: fall, sway;
-            animation-timing-function: linear, ease-in-out;
-            animation-iteration-count: 1, infinite;
+            position:absolute;
+            top:-10vh;              /* mulai sedikit di atas layar */
+            opacity:.85;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,.15));
+            animation-name: fallDown, swaySide, spin;
+            animation-timing-function: linear, ease-in-out, linear;
+            animation-iteration-count: infinite;
         }
 
-        /* Gerak jatuh */
-        @keyframes fall{
-            to { transform: translateY(110vh) rotate(720deg); }
+        /* Jatuh ke bawah */
+        @keyframes fallDown{
+            to{ top:110vh; }
         }
-        /* Gerak kiri-kanan kecil */
-        @keyframes sway{
-            0%   { transform: translateX(-20px); }
-            50%  { transform: translateX( 20px); }
-            100% { transform: translateX(-20px); }
+        
+        /* Goyang kiri-kanan */
+        @keyframes swaySide{
+            0%,100%{ transform:translateX(0); }
+            50%    { transform:translateX(var(--sway,25px)); }
         }
         
         /* Berputar ringan */
         @keyframes spin{
             to{ transform:rotate(360deg); }
         }
+    </style>
 
+    <style>
         /* slide non-aktif: bekukan animasi */
         .slide:not(.active) .falling-flower{
             animation-play-state: paused;
@@ -371,9 +368,6 @@
                 spin calc(var(--dur)*.7) linear var(--delay) infinite;
             will-change: transform;
         }
-
-        /* --- SEMBUNYIKAN main-content SEBELUM INTRO SELESAI --- */
-        #main-content.hidden { visibility: hidden; }
     </style>
 </head>
     <body>
@@ -400,21 +394,8 @@
         <p class="intro-text">Sentuh bunga ini ya sayang...</p>
     </div>
 
-        <!-- container hujan bunga -->
-        <div id="flower-rain" class="flower-rain-container"></div>
-        
-        <!-- ======================== -->
-        <!--  MAIN CONTENT            -->
-        <!-- ======================== -->
-        <div id="main-content" class="hidden">
-            <div class="slide active" id="slide1">
-                <!-- isi slide -->
-            </div>
-            … slide lain …
-        </div>
-
     <!-- 2. Konten Utama (Berisi semua slide) -->
-    <div id="main-content" class="hidden">
+    <div id="main-content" style="visibility: hidden;">
 
         <!-- SLIDE 1 -->
         <div class="slide active" id="slide1">
@@ -504,7 +485,7 @@
                 // Tunggu animasi mekar selesai, lalu tampilkan konten utama
                 setTimeout(() => {
                     introScreen.classList.add('hidden');
-                    mainContent.classList.remove('hidden');
+                    mainContent.style.visibility = 'visible';
                     // Hapus layar intro dari DOM setelah transisi selesai agar tidak mengganggu
                      setTimeout(() => {
                         introScreen.style.display = 'none';
@@ -569,53 +550,6 @@
 
                     rain.appendChild(span);
                 }
-            });
-        });
-
-        
-        document.addEventListener('DOMContentLoaded', () => {
-
-            const introScreen  = document.getElementById('intro-screen');   // layar awal (bunga mekar)
-            const mainContent  = document.getElementById('main-content');   // semua slide
-            const rainContainer= document.getElementById('flower-rain');    // wadah kelopak
-
-            /* ================ FUNGSI GENERATOR KELOPAK ================ */
-            function makeOneFlower(){
-                const span = document.createElement('span');
-                span.className = 'falling-flower';
-                span.innerHTML = '🌸';
-
-                /* posisi horizontal acak */
-                span.style.left = Math.random() * window.innerWidth + 'px';
-                /* ukuran & durasi acak */
-                const size = 15 + Math.random() * 25;      // 15–40 px
-                span.style.fontSize = size + 'px';
-                span.style.animationDuration = 3 + Math.random()*5 + 's';  // 3–8 dtk
-
-                rainContainer.appendChild(span);
-
-                /* buang elemen setelah animasi selesai (hemat memori) */
-                setTimeout(() => span.remove(), 10000);
-            }
-
-            let rainInterval;          // supaya bisa dihentikan nanti bila mau
-
-            function startFlowerRain(){
-                /* buat 1 kelopak tiap 300 ms */
-                rainInterval = setInterval(makeOneFlower, 300);
-            }
-
-            /* ================ HILANGKAN INTRO & MULAI HUJAN ============ */
-            introScreen.addEventListener('click', () => {
-                /* animasi intro boleh apa saja; contoh langsung saja … */
-                introScreen.classList.add('fade-out');
-
-                /* tunggu 0.8 dtk, lalu tampilkan slide + mulai hujan */
-                setTimeout(() => {
-                    introScreen.remove();                // hapus elemen intro
-                    mainContent.classList.remove('hidden');
-                    startFlowerRain();                   // <—— INI KUNCI NYA
-                }, 800);
             });
         });
     </script>
