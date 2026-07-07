@@ -565,7 +565,7 @@
                         // Jika slide berikutnya punya video (Contoh: Slide 2), langsung aktifkan otomatis
                         const nextVideo = nextSlide.querySelector('video');
                         if (nextVideo) {
-                            nextVideo.muted = false;
+                            nextVideo.muted = true;
                             nextVideo.play().catch(() => {
                                 nextVideo.muted = true;
                                 nextVideo.play();
