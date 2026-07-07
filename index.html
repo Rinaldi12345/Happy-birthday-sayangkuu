@@ -8,12 +8,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        /* --- Pengaturan Dasar --- */
+        /* --- Pengaturan Dasar & Palet Warna Premium --- */
         :root {
-            --bg-color: #fde2e4;
-            --text-color: #2a2a2a;
-            --primary-color: #e78f8f;
-            --secondary-color: #f4acb7;
+            --bg-color-1: #ffdde1;
+            --bg-color-2: #ee9ca7;
+            --bg-color-3: #fbc2eb;
+            --text-color: #5a4a4a;
+            --primary-color: #d84361; 
+            --secondary-color: #ff9a9e;
             --heart-color: #ff4d6d;
         }
 
@@ -28,10 +30,18 @@
             height: 100%;
             font-family: 'Poppins', sans-serif;
             overflow: hidden;
-            background: linear-gradient(135deg, var(--bg-color), #fff1f2);
+            background: linear-gradient(-45deg, var(--bg-color-1), var(--bg-color-2), var(--bg-color-3), #fff1f2);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
             display: flex;
             justify-content: center;
             align-items: center;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         /* --- Layar Pembuka (Bunga) --- */
@@ -45,7 +55,8 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: var(--bg-color);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
             z-index: 100;
             transition: opacity 1.5s ease-in-out;
             cursor: pointer;
@@ -76,14 +87,15 @@
 
         .petal {
             position: absolute;
-            width: 100px;
-            height: 150px;
+            width: 90px;
+            height: 140px;
             background: linear-gradient(to bottom, #ffc2d1, #ff8fab);
             border-radius: 50px 50px 0 0;
-            left: 75px;
-            top: 0;
+            left: 80px;
+            top: 10px;
             transform-origin: bottom center;
             transition: transform 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
         
         .petal1 { transform: rotate(0deg) scale(0.8); }
@@ -95,17 +107,17 @@
 
         .flower-center {
             position: absolute;
-            width: 80px;
-            height: 80px;
-            background: #ffe54c;
+            width: 70px;
+            height: 70px;
+            background: radial-gradient(circle, #ffe54c, #ffb703);
             border-radius: 50%;
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
             z-index: 10;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
         }
 
-        /* Animasi Mekar */
         .flower.bloomed .petal { transform: scale(1); }
         .flower.bloomed .petal1 { transform: rotate(25deg) translateY(-50px) scale(1); }
         .flower.bloomed .petal2 { transform: rotate(85deg) translateY(-50px) scale(1); }
@@ -116,14 +128,16 @@
 
         .intro-text {
             margin-top: 40px;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             color: var(--primary-color);
             font-weight: 600;
-            animation: fadeIn 2s ease-in-out;
+            animation: pulseText 2s ease-in-out infinite;
+            text-shadow: 0 2px 5px rgba(216, 67, 97, 0.2);
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; } to { opacity: 1; }
+        @keyframes pulseText {
+            0%, 100% { opacity: 0.7; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
         }
 
         /* --- Konten Utama (Slides) --- */
@@ -145,14 +159,14 @@
             padding: 20px;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 1.2s ease-in-out, transform 1.2s ease-in-out;
-            transform: scale(0.95);
+            transition: opacity 1.2s ease-in-out, transform 1.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transform: translateY(20px) scale(0.95);
         }
 
         .slide.active {
             opacity: 1;
             visibility: visible;
-            transform: scale(1);
+            transform: translateY(0) scale(1);
             z-index: 10;
         }
 
@@ -161,88 +175,94 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
-            background: rgba(255, 255, 255, 0.7);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.45);
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(220, 100, 120, 0.15);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
             max-width: 90%;
-            width: 600px;
+            width: 650px;
         }
         
-        /* Layout berbeda untuk slide */
         #slide2 .slide-content { flex-direction: row-reverse; text-align: right; }
         #slide1 .slide-content { flex-direction: row; text-align: left; }
         
-        @media (max-width: 768px) {
-            #slide1 .slide-content, #slide2 .slide-content {
-                flex-direction: column;
-                text-align: center;
-            }
+        /* Media (Foto & Video) Membulat dan Melayang */
+        .slide img, .slide video.media-element {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center top; /* Fokus ke bagian wajah/atas */
+            margin: 20px;
+            box-shadow: 0 10px 25px rgba(216, 67, 97, 0.3);
+            border: 6px solid rgba(255, 255, 255, 0.85);
+            animation: float 6s ease-in-out infinite;
         }
 
-        .slide img {
-            width: 200px;
-            height: 200px;
-            border-radius: 15px;
-            object-fit: cover;
-            margin: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
-            border: 5px solid white;
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         .slide .text-container {
-            max-width: 300px;
+            max-width: 320px;
         }
 
         .slide h1 {
             font-family: 'Great Vibes', cursive;
-            font-size: 3rem;
+            font-size: 3.5rem;
             color: var(--primary-color);
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             font-weight: normal;
+            text-shadow: 1px 2px 4px rgba(0,0,0,0.1);
+            line-height: 1.2;
         }
 
         .slide p {
             color: var(--text-color);
-            font-size: 1rem;
-            line-height: 1.6;
-            margin-bottom: 25px;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 30px;
+            font-weight: 300;
         }
 
+        /* Tombol Modern */
         .next-button {
             display: inline-block;
-            padding: 12px 25px;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            padding: 12px 30px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
             text-decoration: none;
             border-radius: 50px;
             font-weight: 600;
-            box-shadow: 0 4px 15px rgba(231, 143, 143, 0.5);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 8px 20px rgba(216, 67, 97, 0.3);
+            transition: all 0.3s ease;
             cursor: pointer;
             border: none;
             font-size: 1rem;
+            letter-spacing: 0.5px;
         }
 
         .next-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 7px 20px rgba(244, 172, 183, 0.7);
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 12px 25px rgba(216, 67, 97, 0.5);
         }
 
-        /* Animasi Hati untuk Tombol Lanjut */
+        /* Animasi Hati */
         #slide3 .next-button {
             position: relative;
             background: none;
             border: none;
             padding: 0;
-            width: 80px;
-            height: 80px;
+            width: 70px;
+            height: 70px;
             box-shadow: none;
+            margin-top: 10px;
         }
         #slide3 .next-button:hover {
-             transform: scale(1.1);
-             box-shadow: none;
+             transform: scale(1.15);
         }
 
         .heart-animation {
@@ -251,7 +271,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            animation: beat 1.3s infinite;
+            animation: beat 1s infinite;
         }
 
         .heart-animation::before,
@@ -259,14 +279,15 @@
             content: '';
             position: absolute;
             top: 0;
-            width: 40px;
-            height: 65px;
+            width: 35px;
+            height: 55px;
             border-radius: 50px 50px 0 0;
             background: var(--heart-color);
+            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
         }
 
         .heart-animation::before {
-            left: 40px;
+            left: 35px;
             transform: rotate(-45deg);
             transform-origin: 0 100%;
         }
@@ -278,107 +299,131 @@
         }
 
         @keyframes beat {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
+            0%, 100% { transform: scale(1); }
+            30% { transform: scale(1.15); }
+            50% { transform: scale(1); }
+            70% { transform: scale(1.15); }
         }
 
         /* Slide Terakhir */
         #slide4 .slide-content {
-            background: none;
-            backdrop-filter: none;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
             box-shadow: none;
+            backdrop-filter: none;
         }
 
         #slide4 h1 {
-            font-size: 4rem;
+            font-size: 4.5rem;
+            animation: fadeInDown 1.5s ease;
         }
 
         #slide4 p {
-            font-size: 1.2rem;
+            font-size: 1.25rem;
+            animation: fadeInUp 1.5s ease;
+            color: var(--primary-color);
+            font-weight: 600;
         }
         
-        <!-- ===== CSS TAMBAHAN : HUJAN BUNGA ===== -->
-        /* wadah transparan di tiap slide */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Hujan Bunga */
         .flower-rain-container{
             position:absolute;
             inset:0;
             overflow:hidden;
             pointer-events:none;
-            z-index:4;              /* tepat di bawah .slide-content (z-index:10) */
+            z-index:4;
         }
         
-        /* kelopak individual */
         .falling-flower{
             position:absolute;
-            top:-10vh;              /* mulai sedikit di atas layar */
-            opacity:.85;
+            top:-10vh;
+            opacity: 0.7;
             filter: drop-shadow(0 4px 6px rgba(0,0,0,.15));
             animation-name: fallDown, swaySide, spin;
             animation-timing-function: linear, ease-in-out, linear;
             animation-iteration-count: infinite;
         }
 
-        /* Jatuh ke bawah */
-        @keyframes fallDown{
-            to{ top:110vh; }
-        }
-        
-        /* Goyang kiri-kanan */
+        @keyframes fallDown{ to{ top:110vh; } }
         @keyframes swaySide{
             0%,100%{ transform:translateX(0); }
             50%    { transform:translateX(var(--sway,25px)); }
         }
-        
-        /* Berputar ringan */
-        @keyframes spin{
-            to{ transform:rotate(360deg); }
-        }
+        @keyframes spin{ to{ transform:rotate(360deg); } }
 
-        /* ---------- TOMBOL LOVE DI SLIDE 4 ---------- */
+        /* Tombol Love Akhir */
         .love-button{
             display:inline-block;
-            width:120px;          /* ubah sesuai ukuran gambar */
-            height:120px;
-            margin-top:35px;
+            width:130px;
+            height:130px;
+            margin-top:30px;
             cursor:pointer;
-            /* animasi detak (pulse) terus-menerus */
             animation: lovePulse 2s ease-in-out infinite;
-            /* agar bisa sentuh di smartphone */
             touch-action: manipulation;
         }
         .love-button img{
-            width:80%;
-            height:80%;
+            width:100%;
+            height:100%;
             object-fit:contain;
-            filter: drop-shadow(0 6px 10px rgba(0,0,0,.15));
+            filter: drop-shadow(0 8px 15px rgba(216, 67, 97, 0.4));
             transition: transform .3s ease;
         }
-
-        /* Efek hover / tap: sedikit membesar dan berputar */
-        .love-button:hover img,
-        .love-button:focus img{
-            transform: scale(1.18) rotate(10deg);
+        .love-button:hover img, .love-button:focus img{
+            transform: scale(1.15) rotate(5deg);
         }
-
-        /* Keyframe detak jantung / pulse */
         @keyframes lovePulse{
             0%   { transform: scale(1); }
-            30%  { transform: scale(1.15) rotate(-3deg); }
+            30%  { transform: scale(1.1) rotate(-3deg); }
             60%  { transform: scale(1); }
-            100% { transform: scale(1.15) rotate(3deg); }
+            100% { transform: scale(1.1) rotate(3deg); }
+        }
+
+        /* --- PENGATURAN KHUSUS HANDPHONE (RESPONSIF) --- */
+        @media (max-width: 768px) {
+            .slide-content {
+                flex-direction: column !important;
+                text-align: center !important;
+                padding: 25px 15px;
+                width: 95%;
+            }
+            .slide img, .slide video.media-element {
+                width: 160px;
+                height: 160px;
+                margin: 10px auto 15px auto;
+                border-width: 4px;
+            }
+            .slide h1 {
+                font-size: 2.3rem;
+            }
+            .slide p {
+                font-size: 0.95rem;
+                margin-bottom: 20px;
+            }
+            .flower-container {
+                transform: scale(0.85);
+            }
+            .intro-text {
+                font-size: 1.1rem;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- GANTI 'link_musik_kamu.mp3' DENGAN LINK MUSIK MP3 ANDA -->
-    <audio id="background-music" loop autoplay muted>
+    <audio id="background-music" autoplay muted>
         <source src="ulang-tahun.mp3" type="audio/mpeg">
         Browser Anda tidak mendukung elemen audio.
     </audio>
 
-    <!-- 1. Layar Pembuka -->
     <div id="intro-screen">
         <div class="flower-container">
             <div class="flower" id="flower">
@@ -394,44 +439,36 @@
         <p class="intro-text">Sentuh bunga ini ya sayang...</p>
     </div>
 
-    <!-- 2. Konten Utama (Berisi semua slide) -->
     <div id="main-content" style="visibility: hidden;">
 
-        <!-- SLIDE 1 -->
         <div class="slide active" id="slide1">
             <div class="slide-content">
-                <!-- GANTI FOTO DI SINI -->
-                <img src="foto1.jpeg" alt="Foto pasangan 1">
+                <video class="media-element" autoplay loop muted playsinline>
+                    <source src="video1.mp4" type="video/mp4">
+                </video>
                 <div class="text-container">
-                    <!-- GANTI TULISAN DI SINI -->
                     <h1>Selamat Ulang Tahun!</h1>
-                    <p>Untuk orang paling spesial di hidupku. Hari ini adalah hari bahagiamu, dan aku ingin memulainya dengan momen indah kita.</p>
-                    <button class="next-button" data-next="2">Lihat selanjutnya...</button>
+                    <p>Untuk orang paling spesial di hidupku. Hari ini adalah hari bahagiamu, aku harap kamu suka ya hadiah kecil ini.</p>
+                    <button class="next-button" data-next="2">Lanjut sayang...</button>
                 </div>
             </div>
         </div>
 
-        <!-- SLIDE 2 -->
         <div class="slide" id="slide2">
             <div class="slide-content">
-                 <!-- GANTI FOTO DI SINI -->
                 <img src="foto2.jpeg" alt="Foto pasangan 2">
                 <div class="text-container">
-                     <!-- GANTI TULISAN DI SINI -->
                     <h1>Setiap Momen...</h1>
-                    <p>...bersamamu adalah anugerah. Terima kasih sudah membawa begitu banyak tawa dan warna dalam hidupku. Aku sangat bersyukur memilikimu.</p>
+                    <p>...bersamamu adalah anugerah. Terima kasih sudah membawa begitu banyak tawa dan warna dalam hidup aku. Aku bersyukur punya kamu.</p>
                     <button class="next-button" data-next="3">Ada lagi lho...</button>
                 </div>
             </div>
         </div>
 
-        <!-- SLIDE 3 -->
         <div class="slide" id="slide3">
             <div class="slide-content">
-                 <!-- GANTI FOTO DI SINI -->
                 <img src="foto3.jpeg" alt="Foto pasangan 3">
                 <div class="text-container">
-                     <!-- GANTI TULISAN DI SINI -->
                     <h1>Harapanku Untukmu</h1>
                     <p>Semoga di usiamu yang baru, kamu selalu diberi kesehatan, kebahagiaan yang tak terhingga, dan semua impianmu tercapai. Aku akan selalu di sini mendukungmu.</p>
                     <button class="next-button" data-next="4">
@@ -441,18 +478,12 @@
             </div>
         </div>
         
-        <!-- SLIDE 4 - SLIDE TERAKHIR -->
         <div class="slide" id="slide4">
             <div class="slide-content">
-                 <!-- GANTI TULISAN DI SINI -->
                 <h1>I Love You</h1>
-                <p>Lebih dari kata-kata yang bisa kuungkapkan. Dulu, sekarang, dan selamanya. Selamat ulang tahun sekali lagi, cintaku &#128150;.</p>
+                <p>Lebih dari kata-kata yang bisa kuungkapkan. Dulu, sekarang, dan selamanya.<br>Selamat ulang tahun sekali lagi, cintaku 💖</p>
 
-                <!-- ↓↓↓  TOMBOL LOVE BARU  ↓↓↓  -->
-                <!-- Ganti link & src sesuai kebutuhan -->
-                <a href="https://rinaldi12345.github.io/foto-album-kita/"
-                    target="_blank"
-                    class="love-button">
+                <a href="https://rinaldi12345.github.io/foto-album-kita/" target="_blank" class="love-button">
                     <img src="fototombol1.png" alt="Love Button">
                 </a>
             </div>
@@ -462,45 +493,33 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Ambil semua elemen yang dibutuhkan
             const introScreen = document.getElementById('intro-screen');
             const flower = document.getElementById('flower');
             const mainContent = document.getElementById('main-content');
             const music = document.getElementById('background-music');
             const nextButtons = document.querySelectorAll('.next-button');
 
-            // Fungsi untuk memulai musik
             function playMusic() {
-                // Interaksi pengguna diperlukan agar audio bisa diputar otomatis
-                music.muted = false; // buka mute-nya
+                music.muted = false;
                 music.play().catch(error => {
-                    console.log("Pemutaran otomatis diblokir oleh browser. Interaksi pengguna diperlukan.");
+                    console.log("Pemutaran otomatis diblokir oleh browser.");
                 });
             }
             
-            // Event listener saat bunga di layar pembuka diklik
             introScreen.addEventListener('click', () => {
-                // Putar musik
                 playMusic();
-
-                // Tambahkan class 'bloomed' untuk memicu animasi mekar
                 flower.classList.add('bloomed');
-                
-                // Sembunyikan tulisan "Sentuh bunga ini"
                 introScreen.querySelector('.intro-text').style.opacity = '0';
 
-                // Tunggu animasi mekar selesai, lalu tampilkan konten utama
                 setTimeout(() => {
                     introScreen.classList.add('hidden');
                     mainContent.style.visibility = 'visible';
-                    // Hapus layar intro dari DOM setelah transisi selesai agar tidak mengganggu
                      setTimeout(() => {
                         introScreen.style.display = 'none';
                     }, 1500);
-                }, 1500); // Durasi ini harus cocok dengan transisi CSS
+                }, 1500);
             });
 
-            // Event listener untuk semua tombol "selanjutnya"
             nextButtons.forEach(button => {
                 button.addEventListener('click', () => {
                     const currentSlide = button.closest('.slide');
@@ -515,38 +534,33 @@
             });
         });
     </script>
-    <!-- ===== JS TAMBAHAN : GENERATOR HUJAN BUNGA ===== -->
+
     <script>
         window.addEventListener('DOMContentLoaded',()=>{
-
-            /* Pengaturan tiap slide: emoji & jumlah */
             const settings={
-                slide1:{emoji:'🌸',count:17},
-                slide2:{emoji:'🌼',count:18},
-                slide3:{emoji:'🌺',count:18},
-                slide4:{emoji:'💮',count:18}
+                slide1:{emoji:'🌸',count:20},
+                slide2:{emoji:'✨',count:15},
+                slide3:{emoji:'💖',count:18},
+                slide4:{emoji:'💮',count:25}
             };
 
             Object.entries(settings).forEach(([id,opt])=>{
                 const slide=document.getElementById(id);
                 if(!slide) return;
 
-                /* buat wadah bunga transparan */
                 const rain=document.createElement('div');
                 rain.className='flower-rain-container';
                 slide.appendChild(rain);
 
-                /* generate kelopak */
                 for(let i=0;i<opt.count;i++){
                     const span=document.createElement('span');
                     span.className='falling-flower';
                     span.textContent=opt.emoji;
 
-                    /* acak properti kelopak agar natural */
-                    const size   = Math.random()*20 + 20;           // 20-40 px
-                    const left   = Math.random()*100;               // %
-                    const delay  = Math.random()*5;                 // 0-5 s
-                    const dur    = Math.random()*8 + 6;             // 6-14 s
+                    const size   = Math.random()*15 + 15; 
+                    const left   = Math.random()*100; 
+                    const delay  = Math.random()*5; 
+                    const dur    = Math.random()*8 + 8; 
                     const sway   = (Math.random()>0.5?1:-1)*(Math.random()*30+10)+'px';
 
                     span.style.fontSize      = size+'px';
@@ -561,5 +575,25 @@
         });
     </script>
 
+    <script>
+        const playlist = [
+            "ulang-tahun.mp3",
+            "lagu-kedua.mp3",   // Ganti dengan nama file lagu kedua Anda
+        ];
+        
+        let urutanLagu = 0; 
+        const pemutarMusik = document.getElementById("background-music");
+
+        pemutarMusik.addEventListener("ended", function() {
+            urutanLagu++; 
+
+            if (urutanLagu >= playlist.length) {
+                urutanLagu = 0; 
+            }
+
+            pemutarMusik.src = playlist[urutanLagu];
+            pemutarMusik.play();
+        });
+    </script>
 </body>
 </html>
