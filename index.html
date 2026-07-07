@@ -13,7 +13,7 @@
             --bg-color-1: #ffdde1;
             --bg-color-2: #ee9ca7;
             --bg-color-3: #fbc2eb;
-            --text-color: #5a4a4a;
+            --text-color: #4a3f3f;
             --primary-color: #d84361; 
             --secondary-color: #ff9a9e;
             --heart-color: #ff4d6d;
@@ -55,10 +55,10 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(15px);
             z-index: 100;
-            transition: opacity 1.5s ease-in-out;
+            transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1);
             cursor: pointer;
         }
 
@@ -95,7 +95,7 @@
             top: 10px;
             transform-origin: bottom center;
             transition: transform 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(216, 67, 97, 0.15);
         }
         
         .petal1 { transform: rotate(0deg) scale(0.8); }
@@ -159,14 +159,14 @@
             padding: 20px;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 1.2s ease-in-out, transform 1.2s cubic-bezier(0.25, 0.8, 0.25, 1);
-            transform: translateY(20px) scale(0.95);
+            transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: scale(0.92);
         }
 
         .slide.active {
             opacity: 1;
             visibility: visible;
-            transform: translateY(0) scale(1);
+            transform: scale(1);
             z-index: 10;
         }
 
@@ -175,49 +175,49 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
-            background: rgba(255, 255, 255, 0.45);
+            background: rgba(255, 255, 255, 0.65);
             padding: 40px;
             border-radius: 30px;
-            box-shadow: 0 15px 35px rgba(220, 100, 120, 0.15);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 20px 40px rgba(220, 100, 120, 0.12), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(20px);
             max-width: 90%;
-            width: 650px;
+            width: 680px;
+            transition: all 0.5s ease;
         }
         
         #slide2 .slide-content { flex-direction: row-reverse; text-align: right; }
         #slide1 .slide-content { flex-direction: row; text-align: left; }
         #slide3 .slide-content { flex-direction: row-reverse; text-align: right; }
         
-        /* Media (Foto & Video) Membulat dan Melayang */
+        /* Media Mewbulat Sinematik */
         .slide img, .slide video.media-element {
-            width: 220px;
-            height: 220px;
+            width: 230px;
+            height: 230px;
             border-radius: 50%;
             object-fit: cover;
-            object-position: center top; /* Fokus ke bagian wajah/atas */
+            object-position: center top;
             margin: 20px;
-            box-shadow: 0 10px 25px rgba(216, 67, 97, 0.3);
-            border: 6px solid rgba(255, 255, 255, 0.85);
+            box-shadow: 0 12px 30px rgba(216, 67, 97, 0.25), 0 0 0 8px rgba(255, 255, 255, 0.8);
             animation: float 6s ease-in-out infinite;
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(2deg); }
         }
 
         .slide .text-container {
-            max-width: 320px;
+            max-width: 340px;
+            padding: 0 10px;
         }
 
         .slide h1 {
             font-family: 'Great Vibes', cursive;
-            font-size: 3.5rem;
+            font-size: 3.6rem;
             color: var(--primary-color);
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             font-weight: normal;
-            text-shadow: 1px 2px 4px rgba(0,0,0,0.1);
+            text-shadow: 1px 2px 4px rgba(216, 67, 97, 0.1);
             line-height: 1.2;
         }
 
@@ -225,21 +225,21 @@
             color: var(--text-color);
             font-size: 1.05rem;
             line-height: 1.7;
-            margin-bottom: 30px;
-            font-weight: 300;
+            margin-bottom: 25px;
+            font-weight: 400;
         }
 
-        /* Tombol Modern */
+        /* Tombol Modern Modis */
         .next-button {
             display: inline-block;
-            padding: 12px 30px;
+            padding: 12px 35px;
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
             text-decoration: none;
             border-radius: 50px;
             font-weight: 600;
-            box-shadow: 0 8px 20px rgba(216, 67, 97, 0.3);
-            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(216, 67, 97, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer;
             border: none;
             font-size: 1rem;
@@ -247,8 +247,8 @@
         }
 
         .next-button:hover {
-            transform: translateY(-4px) scale(1.05);
-            box-shadow: 0 12px 25px rgba(216, 67, 97, 0.5);
+            transform: translateY(-4px);
+            box-shadow: 0 14px 30px rgba(216, 67, 97, 0.45);
         }
 
         /* Animasi Hati */
@@ -308,30 +308,30 @@
 
         /* Slide Terakhir */
         #slide5 .slide-content {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.3);
             border: none;
             box-shadow: none;
             backdrop-filter: none;
         }
 
         #slide5 h1 {
-            font-size: 4.5rem;
+            font-size: 4.8rem;
             animation: fadeInDown 1.5s ease;
         }
 
         #slide5 p {
-            font-size: 1.25rem;
+            font-size: 1.3rem;
             animation: fadeInUp 1.5s ease;
             color: var(--primary-color);
             font-weight: 600;
         }
         
         @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
+            from { opacity: 0; transform: translateY(-30px); }
             to { opacity: 1; transform: translateY(0); }
         }
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
@@ -393,17 +393,17 @@
             .slide-content {
                 flex-direction: column !important;
                 text-align: center !important;
-                padding: 25px 15px;
-                width: 95%;
+                padding: 30px 20px;
+                width: 92%;
             }
             .slide img, .slide video.media-element {
-                width: 160px;
-                height: 160px;
+                width: 170px;
+                height: 170px;
                 margin: 10px auto 15px auto;
                 border-width: 4px;
             }
             .slide h1 {
-                font-size: 2.3rem;
+                font-size: 2.5rem;
             }
             .slide p {
                 font-size: 0.95rem;
@@ -420,7 +420,7 @@
 </head>
 <body>
 
-    <audio id="background-music" autoplay muted>
+    <audio id="background-music" loop>
         <source src="ulang-tahun.mp3" type="audio/mpeg">
         Browser Anda tidak mendukung elemen audio.
     </audio>
@@ -444,12 +444,12 @@
 
         <div class="slide active" id="slide1">
             <div class="slide-content">
-                <video class="media-element" autoplay loop muted playsinline>
+                <video id="video-slide1" class="media-element" loop playsinline>
                     <source src="video1.mp4" type="video/mp4">
                 </video>
                 <div class="text-container">
                     <h1>Selamat Ulang Tahun ya sayang!</h1>
-                    <p>Untuk orang paling spesial di hari yang spesial ini. Di setiap halaman web ini, kupersembahkan untuk mu .</p>
+                    <p>Untuk orang paling spesial di hari yang spesial ini. Di setiap halaman web ini, kupersembahkan untuk mu.</p>
                     <button class="next-button" data-next="2">Lanjut sayang...</button>
                 </div>
             </div>
@@ -457,7 +457,7 @@
 
         <div class="slide" id="slide2">
             <div class="slide-content">
-                <video class="media-element" autoplay loop muted playsinline>
+                <video id="video-slide2" class="media-element" loop playsinline>
                     <source src="video2.mp4" type="video/mp4">
                 </video>
                 <div class="text-container">
@@ -512,28 +512,40 @@
             const mainContent = document.getElementById('main-content');
             const music = document.getElementById('background-music');
             const nextButtons = document.querySelectorAll('.next-button');
+            const video1 = document.getElementById('video-slide1');
 
-            function playMusic() {
-                music.muted = false;
-                music.play().catch(error => {
-                    console.log("Pemutaran otomatis diblokir oleh browser.");
-                });
-            }
-            
+            // Logika Aktivasi Utama setelah Interaksi Pertama (Sentuh Bunga)
             introScreen.addEventListener('click', () => {
-                playMusic();
+                // 1. Hidupkan musik latar (tidak lagi di-mute)
+                music.muted = false;
+                music.play().catch(e => console.log("Musik diblokir browser"));
+
+                // 2. Efek Mekar Bunga Intro
                 flower.classList.add('bloomed');
                 introScreen.querySelector('.intro-text').style.opacity = '0';
 
                 setTimeout(() => {
                     introScreen.classList.add('hidden');
                     mainContent.style.visibility = 'visible';
-                     setTimeout(() => {
+                    
+                    // 3. JAMINAN UTAMA: Video slide 1 langsung berputar aktif (bersuara)
+                    if(video1) {
+                        video1.muted = false; 
+                        video1.play().catch(error => {
+                            // Jika browser desktop masih memblokir audio video, putar paksa versi silent dahulu
+                            video1.muted = true;
+                            video1.play();
+                            console.log("Video diputar ter-mute demi mematuhi aturan browser.");
+                        });
+                    }
+
+                    setTimeout(() => {
                         introScreen.style.display = 'none';
                     }, 1500);
-                }, 1500);
+                }, 1300);
             });
 
+            // Logika Perpindahan Slide & Pengendali Video agar Hemat Resource
             nextButtons.forEach(button => {
                 button.addEventListener('click', () => {
                     const currentSlide = button.closest('.slide');
@@ -541,8 +553,24 @@
                     const nextSlide = document.getElementById(nextSlideId);
 
                     if (currentSlide && nextSlide) {
+                        // Hentikan video di slide yang ditinggalkan agar suaranya tidak tabrakan
+                        const currentVideo = currentSlide.querySelector('video');
+                        if (currentVideo) {
+                            currentVideo.pause();
+                        }
+
                         currentSlide.classList.remove('active');
                         nextSlide.classList.add('active');
+
+                        // Jika slide berikutnya punya video (Contoh: Slide 2), langsung aktifkan otomatis
+                        const nextVideo = nextSlide.querySelector('video');
+                        if (nextVideo) {
+                            nextVideo.muted = false;
+                            nextVideo.play().catch(() => {
+                                nextVideo.muted = true;
+                                nextVideo.play();
+                            });
+                        }
                     }
                 });
             });
@@ -550,6 +578,7 @@
     </script>
 
     <script>
+        // Logika Hujan Partikel (Kelopak Bunga, Kilauan, Cinta)
         window.addEventListener('DOMContentLoaded',()=>{
             const settings={
                 slide1:{emoji:'🌸',count:20},
@@ -590,9 +619,10 @@
     </script>
 
     <script>
+        // Logika Pengatur Playlist Musik Berkelanjutan
         const playlist = [
             "ulang-tahun.mp3",
-            "lagu-kedua.mp3",   // Ganti dengan nama file lagu kedua Anda
+            "lagu-kedua.mp3"
         ];
         
         let urutanLagu = 0; 
@@ -606,7 +636,7 @@
             }
 
             pemutarMusik.src = playlist[urutanLagu];
-            pemutarMusik.play();
+            pemutarMusik.play().catch(e => console.log("Gagal memutar lagu berikutnya"));
         });
     </script>
 </body>
